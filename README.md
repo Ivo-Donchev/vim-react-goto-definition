@@ -2,7 +2,7 @@
 
 ## goto definition plugin for React JS
 
-Installation
+### Installation
 
 1) Install [Snake](https://github.com/amoffat/snake) plugin
 2) Clone this repo in ~/.vim/bundle
@@ -12,3 +12,6 @@ Installation
 
 from snake.plugins import vim_react_plugin
 ```
+
+### Usage
+`<leader>D` in normal mode while cursor is on the `class/function` 
