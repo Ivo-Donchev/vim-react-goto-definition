@@ -27,15 +27,16 @@ def react_goto_def():
         print('import \'{}\' not found :('.format(word))
         return
 
-    for file in glob.glob('src/**/*.js', recursive=True):
-        with open(file) as f:
-            contents = f.read()
+    for extension in ['js', 'jsx']:
+        for file in glob.glob('src/**/*.{}'.format(extension), recursive=True):
+            with open(file) as f:
+                contents = f.read()
 
-        for func in DECLARATIONS:
-            match = func(word)
-            if func(word) in contents:
-                snake.command(":e {}".format(file))
-                snake.search(match)
-                snake.keys('zt')
-                return
+            for func in DECLARATIONS:
+                match = func(word)
+                if func(word) in contents:
+                    snake.command(":e {}".format(file))
+                    snake.search(match)
+                    snake.keys('zt')
+                    return
 
