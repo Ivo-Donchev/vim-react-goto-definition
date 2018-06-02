@@ -15,7 +15,7 @@ def check_if_import_exists_in_current_file(import_name):
 
         return any(
             [
-                any([ import_name in _ for _ in imp])
+                any([import_name in _ for _ in imp])
                 for imp in imports
             ]
         )

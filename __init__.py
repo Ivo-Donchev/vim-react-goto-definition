@@ -25,6 +25,7 @@ def react_goto_def():
 
     if not exists:
         print('import \'{}\' not found :('.format(word))
+
         return
 
     for extension in ['js', 'jsx']:
@@ -34,9 +35,9 @@ def react_goto_def():
 
             for func in DECLARATIONS:
                 match = func(word)
+
                 if func(word) in contents:
                     snake.command(":e {}".format(file))
                     snake.search(match)
                     snake.keys('zt')
                     return
-
