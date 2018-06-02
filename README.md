@@ -14,4 +14,7 @@ from snake.plugins import vim_react_plugin
 ```
 
 ### Usage
+
 `<leader>D` in normal mode while cursor is on the `class/function` 
+
+NOTE: It searches for functions/classes in `src/` directory in files with `.js` extension
