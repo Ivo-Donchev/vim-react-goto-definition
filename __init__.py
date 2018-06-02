@@ -17,7 +17,7 @@ DECLARATIONS = (
 )
 
 @snake.key_map("<leader>D")
-def react_dummy_goto_def():
+def react_goto_def():
     word = snake.get_word()
 
 
