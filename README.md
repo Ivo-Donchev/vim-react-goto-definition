@@ -5,8 +5,8 @@
 ### Installation
 
 1) Install [Snake](https://github.com/amoffat/snake) plugin
-2) Clone this repo in ~/.vim/bundle
-3) Create ~/.vimrc.py
+2) Clone this repo in `~/.vim/bundle/`
+3) Create `~/.vimrc.py`
 ```
 # ~/.vimrc.py
 
@@ -17,4 +17,4 @@ from snake.plugins import vim_react_plugin
 
 `<leader>D` in normal mode while cursor is on the `class/function` 
 
-NOTE: It searches for functions/classes in `src/` directory in files with `.js` and `.jsx` extensions
+NOTE: It greps for functions/classes definitions with given pattern in `src/` directory in files with `.js` and `.jsx` extensions
