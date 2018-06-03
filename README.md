@@ -1,4 +1,4 @@
-# vim-react-plugin
+# Vim plugin for goto definition in React JS
 
 ## goto definition plugin for React JS
 
