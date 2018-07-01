@@ -20,12 +20,11 @@ DECLARATIONS = (
 def react_goto_def():
     word = snake.get_word()
 
-
     exists = check_if_import_exists_in_current_file(word)
 
     if not exists:
-        print('import \'{}\' not found :('.format(word))
-
+        snake.search(word)
+        snake.keys('zt')
         return
 
     for extension in ['js', 'jsx']:
