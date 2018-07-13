@@ -4,9 +4,14 @@
 
 ### Vundle
 
-Add the following line to your ~/.vimrc
+Add the following line to your `~/.vimrc` :
 ```
 Plugin 'Ivo-Donchev/goto-definition-plugin-for-react'
+```
+and run:
+
+```
+:PluginInstall
 ```
 
 ### Usage
