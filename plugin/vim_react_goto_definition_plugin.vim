@@ -11,11 +11,11 @@ python3 sys.path.append(vim.eval('expand("<sfile>:p:h")'))
 
 function! GetFilesWithDefinitions()
 python3 << endOfPython
-from vim_react_goto_definition_plugin import react_goto_def
+from src.main import goto_definition
 
 current_word = vim.eval('expand("<cword>")')
 current_filename = vim.current.buffer.name
-react_goto_def(
+goto_definition(
     word=current_word,
     filename=current_filename
 )
