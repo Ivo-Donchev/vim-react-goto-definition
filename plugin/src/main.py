@@ -1,6 +1,6 @@
 import glob
 
-from .services import search_in_file, get_import_from_file
+from .services import search_in_file, soft_scrape_from_file
 
 
 def search_in_current_file(*, word, filename):
@@ -17,23 +17,13 @@ def hard_scraping(*, word, filename):
 
 
 def soft_scraping(*, word, filename):
-    print(get_import_from_file(import_name=word, filename=filename))
-
-    # in_current_file = search_in_file(word=word, file=filename)
-
-    # if in_current_file:
-    #     return
-    pass
+    return soft_scrape_from_file(wanted_definition=word, filename=filename)
 
 
 def goto_definition(*, word, filename):
-    found = search_in_current_file(word=word, filename=filename)
+    found = soft_scraping(word=word, filename=filename)
     if found:
         return
-
-    # found = soft_scraping(word=word, filename=filename)
-    # if found:
-    #     return
 
     found = hard_scraping(word=word, filename=filename)
     if found:
