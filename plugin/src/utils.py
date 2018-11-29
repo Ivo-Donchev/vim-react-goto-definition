@@ -1,31 +1,57 @@
-import vim
+import re
+from .constants import IMPORT_REGEX
 
 
-IMPORT_PATTERN = "import (?:[\"'\s]*([\w*{}\n, ]+) from \s*)?[\"'\s]*(([\.]+)?[@\w\/_-]+)[\"'\s]*;?"
+def normalize_import(import_str: str) -> list:
+    imports_strings = [el.strip() for el in import_str.split(',')]
+    internal = any('{' in el for el in import_str)
 
-CLASS_DECLARATION = lambda class_name: 'class {} '.format(class_name)
-FUNCTION_DECLARATION = lambda f_name: 'function {} '.format(f_name)
-GENERATOR_FUNCTION_DECLARATION = lambda f_name: 'function* {} '.format(f_name)
-ARROW_FUNCTION_DECLARATION = lambda f_name: ' {} = '.format(f_name)
+    result = []
+    for el in imports_strings:
+        el = ''.join([ch for ch in el if ch not in ['{', '}']]).strip()
+        if ' as ' in el:
+            imported_as, used_as = [name.strip() for name in el.split(' as ')]
+        else:
+            imported_as, used_as = el, el
 
-DECLARATIONS = (
-    CLASS_DECLARATION,
-    FUNCTION_DECLARATION,
-    ARROW_FUNCTION_DECLARATION,
-    GENERATOR_FUNCTION_DECLARATION,
-)
+        result.append({
+            'imported_as': imported_as,
+            'used_as': used_as,
+            'default': not internal or imported_as == 'default'
+        })
+
+    return result
 
 
-def search_in_file(*, file, word):
-    with open(file) as f:
-        for idx, row in enumerate(f):
-            for func in DECLARATIONS:
-                match = func(word)
+def get_imports_from_file_content(file_content: str) -> list:
+    return [
+        {
+            'imports': normalize_import(imports),
+            'source': source
+        }
+        for imports, source in re.findall(IMPORT_REGEX, file_content)
+    ]
 
-                if match in row:
-                    vim.command(f'edit {file}|{idx+1}')
-                    row.index(word)
 
-                    return True
+def get_import_from_file_content(file_content: str, import_name) -> str:
+    imports = get_imports_from_file_content(file_content=file_content)
+    wanted_import = [
+        el for el in imports
+        if any(
+            el_import for el_import in el['imports']
+            if el_import['used_as'] == import_name
+        )
+    ]
 
-    return False
+    if len(wanted_import) > 0:
+        result = wanted_import[0]
+        import_data = [
+            el for el in result['imports']
+            if el['used_as'] == import_name
+        ][0]
+
+        return {
+            'name': import_data['imported_as'],
+            'source': result['source'],
+            'default': import_data['default']
+        }
