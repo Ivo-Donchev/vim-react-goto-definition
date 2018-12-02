@@ -1,6 +1,6 @@
 import vim
 
-from .utils import get_import_from_file_content
+from .utils import get_import_from_file_content, get_source_paths
 from .constants import ROOT
 
 CLASS_DECLARATION = lambda class_name: 'class {} '.format(class_name)
@@ -55,18 +55,17 @@ def soft_scrape_from_file(wanted_definition: str, filename: str) -> str:
     )
 
     if found:
-        source = found['source']
-        if source.startswith('.'):
-            current_dir = '/'.join(filename.split('/')[:-1])
-            normalized_source = '/' + source.lstrip('./')
-
-            search_in = f'{current_dir}{normalized_source}/index.js'
-        else:
-            search_in = f'{ROOT}/{source}/index.js'
-
-        return soft_scrape_from_file(
-            wanted_definition=wanted_definition,
-            filename=search_in
+        source_paths = get_source_paths(
+            source=found['source'],
+            filename=filename
         )
+
+        for source_path in source_paths:
+            result = soft_scrape_from_file(
+                wanted_definition=wanted_definition,
+                filename=source_path
+            )
+            if result:
+                return result
 
     return search_in_file(file=filename, word=wanted_definition)

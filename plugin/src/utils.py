@@ -1,5 +1,5 @@
 import re
-from .constants import IMPORT_REGEX
+from .constants import IMPORT_REGEX, ROOT
 
 
 def normalize_import(import_str: str) -> list:
@@ -55,3 +55,18 @@ def get_import_from_file_content(file_content: str, import_name) -> str:
             'source': result['source'],
             'default': import_data['default']
         }
+
+
+def get_source_paths(source, filename):
+    directory = ROOT
+    if source.startswith('.'):
+        # local import
+        directory = '/'.join(filename.split('/')[:-1])
+        source = '/' + source.lstrip('./')
+
+    return [
+        f'{directory}{source}.js',
+        f'{directory}{source}.jsx',
+        f'{directory}{source}/index.js',
+        f'{directory}{source}/index.jsx',
+    ]
