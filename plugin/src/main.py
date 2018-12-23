@@ -17,13 +17,18 @@ def hard_scraping(*, word, filename):
 
 
 def soft_scraping(*, word, filename):
-    return soft_scrape_from_file(wanted_definition=word, filename=filename)
+    return soft_scrape_from_file(
+        wanted_definition=word,
+        filename=filename,
+        current_level=0
+    )
 
 
 def goto_definition(*, word, filename):
-    search_funcs = [soft_scraping, hard_scraping]
+    found = soft_scraping(word=word, filename=filename)
+    if found:
+        return
 
-    for search_func in search_funcs:
-        found = search_func(word=word, filename=filename)
-        if found:
-            return
+    found = hard_scraping(word=word, filename=filename)
+    if found:
+        return

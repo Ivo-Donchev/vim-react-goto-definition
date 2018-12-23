@@ -5,6 +5,7 @@ from .utils import (
     get_import_from_file_content,
     get_exports_from_file_content,
 )
+from .constants import MAX_LEVEL_OF_DEPTH
 
 CLASS_DECLARATION = lambda class_name: 'class {} '.format(class_name)  # noqa
 FUNCTION_DECLARATION = lambda f_name: 'function {} '.format(f_name)  # noqa
@@ -59,13 +60,17 @@ def get_exports_from_file(filename):
         pass
 
 
-def soft_scrape_from_file(wanted_definition: str, filename: str) -> str:
+def soft_scrape_from_file(wanted_definition: str, filename: str, current_level: int) -> str:
     """
     Steps of soft scraping:
-      1) Check for `wanted_definition` in current file
-      2) Check for `wanted_definition` import in current file
-      3) If there's export **from** some files => repeat steps 1) and 2) for these files
+      1) Prevent from endless recursion (current_level should be lower than MAX_LEVEL_OF_DEPTH)
+      2) Check for `wanted_definition` in current file
+      3) Check for `wanted_definition` import in current file
+      4) If there's export **from** some files => repeat steps 1) and 2) for these files
     """
+    if current_level > MAX_LEVEL_OF_DEPTH:
+        return False
+
     found_in_current_file = search_in_file(file=filename, word=wanted_definition)
 
     if found_in_current_file:
@@ -77,7 +82,11 @@ def soft_scrape_from_file(wanted_definition: str, filename: str) -> str:
         source_paths = get_source_paths(source=found_import['source'], filename=filename)
 
         for source_path in source_paths:
-            result = soft_scrape_from_file(wanted_definition=wanted_definition, filename=source_path)
+            result = soft_scrape_from_file(
+                wanted_definition=wanted_definition,
+                filename=source_path,
+                current_level=current_level+1
+            )
 
             if result:
                 return result
@@ -96,7 +105,11 @@ def soft_scrape_from_file(wanted_definition: str, filename: str) -> str:
             source_paths = get_source_paths(source=source, filename=filename)
 
             for source_path in source_paths:
-                result = soft_scrape_from_file(wanted_definition=wanted_definition, filename=source_path)
+                result = soft_scrape_from_file(
+                    wanted_definition=wanted_definition,
+                    filename=source_path,
+                    current_level=current_level+1
+                )
 
                 if result:
                     return result
