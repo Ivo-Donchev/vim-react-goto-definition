@@ -1,5 +1,9 @@
 import re
-from .constants import IMPORT_REGEX, ROOT
+from .constants import (
+    ROOT,
+    IMPORT_REGEX,
+    EXPORT_REGEX,
+)
 
 
 def normalize_import(import_str: str) -> list:
@@ -27,6 +31,13 @@ def get_imports_from_file_content(file_content: str) -> list:
     return [
         {'imports': normalize_import(imports), 'source': source}
         for imports, source in re.findall(IMPORT_REGEX, file_content)
+    ]
+
+
+def get_exports_from_file_content(file_content: str) -> list:
+    return [
+        {'exports': exports, 'source': source}
+        for exports, source in re.findall(EXPORT_REGEX, file_content)
     ]
 
 

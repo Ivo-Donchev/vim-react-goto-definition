@@ -21,7 +21,9 @@ def soft_scraping(*, word, filename):
 
 
 def goto_definition(*, word, filename):
-    for search_func in [soft_scraping, hard_scraping]:
+    search_funcs = [soft_scraping, hard_scraping]
+
+    for search_func in search_funcs:
         found = search_func(word=word, filename=filename)
         if found:
             return
