@@ -83,7 +83,7 @@ def soft_scrape_from_file(wanted_definition: str, filename: str, current_level: 
 
         for source_path in source_paths:
             result = soft_scrape_from_file(
-                wanted_definition=wanted_definition,
+                wanted_definition=found_import['name'],  # If `wanted_definition` is renamed into the import
                 filename=source_path,
                 current_level=current_level+1
             )
