@@ -15,8 +15,8 @@ def normalize_import(import_str: str) -> list:
             imported_as, used_as = el, el
 
         result.append({
-            'imported_as': imported_as,
-            'used_as': used_as,
+            'imported_as': imported_as,  # `import {A as B} from ...` => A
+            'used_as': used_as,  # `import {A as B} from ...` => B
             'default': not internal or imported_as == 'default'
         })
 
@@ -25,10 +25,7 @@ def normalize_import(import_str: str) -> list:
 
 def get_imports_from_file_content(file_content: str) -> list:
     return [
-        {
-            'imports': normalize_import(imports),
-            'source': source
-        }
+        {'imports': normalize_import(imports), 'source': source}
         for imports, source in re.findall(IMPORT_REGEX, file_content)
     ]
 
@@ -60,7 +57,7 @@ def get_import_from_file_content(file_content: str, import_name) -> str:
 def get_source_paths(source, filename):
     directory = ROOT
     if source.startswith('.'):
-        # local import
+        # relative import
         directory = '/'.join(filename.split('/')[:-1])
         source = '/' + source.lstrip('./')
 
