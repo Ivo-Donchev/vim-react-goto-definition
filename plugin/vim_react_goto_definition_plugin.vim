@@ -9,7 +9,7 @@ python3 sys.path.append(vim.eval('expand("<sfile>:p:h")'))
 "  Functions
 " -------------------
 
-function! GetFilesWithDefinitions()
+function! ReactGotoDef()
 python3 << endOfPython
 from src.main import goto_definition
 
@@ -24,5 +24,3 @@ goto_definition(
 )
 endOfPython
 endfunction
-
-command! ReactGotoDef call GetFilesWithDefinitions()
