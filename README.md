@@ -1,4 +1,4 @@
-# Goto definition plugin for React js
+# Goto definition plugin for React JS
 
 # Overview
 
@@ -53,7 +53,7 @@ and run:
 
 # Usage
 
-Set you cursor on the imported and type:
+Set you cursor on the imported function/component and type:
 
 ```
 :ReactGotoDef
