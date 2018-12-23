@@ -7,8 +7,18 @@ The implementation is entirely written in Python 3 using regular expressions.
 
 Covered import types:
 
- - relative imports (`import Something from '../components/Something'`) - will search for any of `['../components/Something.jsx', '../components/Something.js', '../components/Something/index.js', '../components/Something/index.jsx']`
- - absolute imports (`import Page1 from 'pages/Page1'`) - will search into **src/** folder for the import (any of `['src/pages/Page1.jsx', 'src/pages/Page1.js', 'src/pages/Page1/index.js', 'src/pages/Page1/index.jsx']`)
+ - relative imports (`import Something from '../components/Something'`) - will search for any of:
+   - '../components/Something.jsx' or
+   - '../components/Something.js' or
+   - '../components/Something/index.js' or
+   - '../components/Something/index.jsx'
+
+ - absolute imports (`import Page1 from 'pages/Page1'`) - will search into **src/** folder for the import:
+   - 'src/pages/Page1.jsx' or
+   - 'src/pages/Page1.js' or
+   - 'src/pages/Page1/index.js' or
+   - 'src/pages/Page1/index.jsx'
+
  - default imports (`import A from './A'` or `import {default as A} from './A'`) and non-default imports (`import {a, b as c} from 'module')`)
 
 Covered definition types:
