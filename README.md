@@ -1,4 +1,4 @@
-# Goto definition plugin for React JS
+# Goto definition plugin for React JS <img src="https://upload.wikimedia.org/wikipedia/commons/9/9f/Vimlogo.svg" width="48"> <img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" width="48">
 
 # Overview
 
