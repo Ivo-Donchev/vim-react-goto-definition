@@ -56,7 +56,7 @@ and run:
 Set you cursor on the imported function/component and type:
 
 ```
-:ReactGotoDef
+:call ReactGotoDef()
 ```
 
 You can also map this function call with:
