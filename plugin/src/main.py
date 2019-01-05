@@ -8,7 +8,7 @@ def search_in_current_file(*, word, filename):
 
 
 def hard_scraping(*, word, filename):
-    for extension in ['js', 'jsx']:
+    for extension in ['js', 'jsx', 'ts', 'tsx']:
         for file in glob.glob('src/**/*.{}'.format(extension), recursive=True):
             result = search_in_file(file=file, word=word)
 

@@ -75,6 +75,10 @@ def get_source_paths(source, filename):
     return [
         f'{directory}{source}.js',
         f'{directory}{source}.jsx',
+        f'{directory}{source}.ts',
+        f'{directory}{source}.tsx',
         f'{directory}{source}/index.js',
         f'{directory}{source}/index.jsx',
+        f'{directory}{source}/index.ts',
+        f'{directory}{source}/index.tsx',
     ]
